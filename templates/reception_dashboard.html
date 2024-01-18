@@ -1,0 +1,24 @@
+{% extends 'employee_base.html' %}
+{% load static %}
+
+{% block content %}
+{% include "employee_panel.html" %}
+<link rel="stylesheet" href="{% static 'css/popupForm.css' %}">
+  <script src="{% static 'js/sort.js' %}"></script>
+
+<center><h4 style="padding:20px; text-align:center; background-color: rgb(40, 45, 100); color:white;">EMPLOYEE</h4></center>
+<br>
+<div style="margin-bottom: 0px;margin-top: 0px;">
+
+    <center>
+            <a class="btn btn-warning" style="text-decoration:none; cursor:pointer;
+                    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);">
+                <button class="btn btn-warning" class="open-button" onclick="openForm()">
+            <h4>Welcome to the <br>Employee Dashboard</h4>
+            </button></a>
+
+    </center>
+    <br>
+
+</div>
+{% endblock content %}

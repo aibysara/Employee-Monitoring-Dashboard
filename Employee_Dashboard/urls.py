@@ -15,8 +15,33 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
+from employee import views
+from django.contrib.auth.views import LoginView, LogoutView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.home_view, name='home'),
+    path('userlogin', LoginView.as_view(template_name='userlogin.html', redirect_authenticated_user=True),
+         name='userlogin'),
+    path('logout', LogoutView.as_view(template_name='userlogin.html'), name='logout'),
+    path('afterlogin', views.afterlogin_view, name='afterlogin'),
+    path('signup', views.signup_view, name='signup'),
+
+    path('adminsignup', views.admin_signup_view, name='adminsignup'),
+    path('admin-dashboard', views.admin_dashboard_view, name='admin-dashboard'),
+    path('admin-employee', views.admin_employee_view, name='admin-employee'),
+    path('admin-approve-employee', views.admin_approve_employee_view, name='admin-approve-employee'),
+    path('approve-employee/<int:pk>', views.approve_employee_view, name='approve-employee'),
+    path('reject-employee/<int:pk>', views.reject_employee_view, name='reject-employee'),
+    path('admin-view-employee', views.admin_view_employee_view, name='admin-view-employee'),
+    path('admin-add-employee', views.admin_add_employee_view, name='admin-add-employee'),
+    path('admin-delete-employee/<int:pk>', views.admin_delete_employee_view, name='admin-delete-employee'),
+    path('admin-update-employee/<int:pk>', views.admin_update_employee_view, name='admin-update-employee'),
+    path('employeesignup', views.employee_signup_view, name='employeesignup'),
+    path('reception-dashboard', views.reception_dashboard_view, name='reception-dashboard'),
 ]
+if (settings.DEBUG):
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

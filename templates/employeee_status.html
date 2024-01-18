@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Employee Status</title>
+</head>
+<body>
+    <h1>Employee Status for {{ employee_status.user.username }}</h1>
+    <p>Last Activity: {{ employee_status.last_activity }}</p>
+    <p>Status: {% if employee_status.is_online %} Online {% else %} Offline {% endif %}</p>
+</body>
+</html>

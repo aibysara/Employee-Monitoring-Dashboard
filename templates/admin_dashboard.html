@@ -1,0 +1,89 @@
+{% extends 'admin_base.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+
+    h6 {
+      color: white;
+    }
+    .bor{
+    padding:1%; margin-left:2%; border:1px solid transparent;border-radius:4px; border-color:#337ab7
+    }
+    .tableFixHead          { overflow-y: auto; height: 240px; width: 650px; }
+    .tableFixHead thead th { position: sticky; top: 0; opacity: 1; }
+    .tableFixHead h6 { position: sticky; }
+    th{
+      background-color: white;
+    }
+  </style>
+</head>
+
+<br><br><br>
+
+<div class="container">
+
+<table>
+<tbody>
+
+
+  <tr>
+    <td>
+
+      {% if employees %}
+      <a style="text-decoration:none;" href="/admin-employee">
+        <div class="row">
+        <div class="bor">
+            <div class="tableFixHead">
+              <h6 class="bg-info" style="padding:9px; text-align:center;">Recent Employee</h6>
+              <table class="table table-striped" >
+              <thead >
+                <tr >
+                  <th>Name</th>
+                  <th>Mode of Working</th>
+                  <th>Mobile</th>
+                  <th>Status</th>
+
+                </tr>
+              </thead>
+              <tbody>
+              {% for d in employees %}
+              <tr>
+                <td> {{d.get_name}}</td>
+                <td>{{d.mode}}</td>
+                <td>{{d.mobile}}</td>
+                {%if d.status%}
+                <td> <span class="badge badge-success">Permanent</span></td>
+                {% else %}
+                <td> <span class="badge badge-info">On Hold</span></td>
+                {% endif %}
+
+              </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      </a>
+      {% else %}
+      <br>
+      <div style="padding:1%; margin-left:1%; width: 465px;"><center><h5 class="bg-danger" style="padding:9px; text-align:center; color:white;">No Recent Employees</h5></center></div>
+      {% endif %}
+
+    </td>
+  </tr>
+</tbody>
+</table>
+
+
+</div>
+
+
+{% endblock content %}
