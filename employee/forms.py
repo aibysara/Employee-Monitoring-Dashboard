@@ -16,3 +16,7 @@ class EmployeeUserForm(forms.ModelForm):
         widgets = {
             'password': forms.PasswordInput()
         }
+class EmployeeForm(forms.ModelForm):
+    class Meta:
+        model = models.Employee
+        fields = ['address', 'mode', 'mobile', 'status', 'email', 'profile_pic']
