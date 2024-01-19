@@ -1,4 +1,4 @@
-{% extends 'admin_base.html' %}
+{% extends 'admin/admin_base.html' %}
 {% block content %}
 {%load static%}
 
@@ -41,7 +41,7 @@
   <div class="bor">
     <div class="tableFixHead">
       <h6 class="bg-info" style="padding:10px; text-align:center;">Employees Record
-      <a style="float:right; text-decoration: none; color:white" href="/employee-status-online">Online</a>
+ <a style="float:right; text-decoration: none; color:white" href="/employee-status-online">Online</a>
 
         <a style="float:right; margin-right:50px; text-decoration: none; color:white" href="/employee-status-offline">Offline</a>
       </h6>
@@ -60,7 +60,7 @@
       </thead>
          {% for e in employees %}
 
-           {% if e.last_activity > a %}
+           {% if e.last_activity == None %}
                     <tr>
         <td> {{e.get_name}}</td>
         <td> <center>
@@ -75,8 +75,23 @@
         <td>{{e.address}}</td>
         <td>{{e.mode}}</td>
         <td>{{e.last_activity}}</td>
-           <td style="color:green">Online</td>
-                    </tr>
+           <td style="color:red">Not Logged in</td>
+         {% elif e.last_activity < a %}
+          <tr>
+        <td> {{e.get_name}}</td>
+        <td> <center>
+          {% if e.profile_pic %}
+          <img src="{{ e.profile_pic.url }}" alt="Profile Pic missing" height="40px" width="40px" />
+          {% else %}
+          No Profile Pic
+          {% endif %}
+        </center></td>
+           <td>{{e.mobile}}</td>
+        <td>{{e.email}}</td>
+        <td>{{e.address}}</td>
+        <td>{{e.mode}}</td>
+        <td>{{e.last_activity}}</td>
+           <td style="color:orange">Offline</td>
 
            {% endif %}
        </tr>
