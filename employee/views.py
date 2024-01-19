@@ -32,7 +32,7 @@ def admin_signup_view(request):
             messages.success(request, "Admin account created successfully.")
             return HttpResponseRedirect('userlogin')
         messages.error(request, "Error. Admin account creation failed.")
-    return render(request, 'adminsignup.html', {'form': form})
+    return render(request, 'admin/adminsignup.html', {'form': form})
 
 def employee_signup_view(request):
     userForm = forms.EmployeeUserForm()
@@ -53,7 +53,7 @@ def employee_signup_view(request):
             messages.success(request, "Employee account created successfully.")
             return HttpResponseRedirect('userlogin')
         messages.error(request, "Error. Employee account creation failed.")
-    return render(request, 'employeesignup.html', context=mydict)
+    return render(request, 'employee/employeesignup.html', context=mydict)
 
 
 def is_admin(user):
@@ -79,9 +79,9 @@ def afterlogin_view(request):
             x.save()
 
             #accountapproval.last_activity.save()
-            return redirect('reception-dashboard')
+            return redirect('employee-dashboard')
         else:
-            return render(request, 'employee_wait_for_approval.html')
+            return render(request, 'employee/employee_wait_for_approval.html')
 
 
 
@@ -96,24 +96,24 @@ def admin_dashboard_view(request):
         'employees': employees,
 
     }
-    return render(request, 'admin_dashboard.html', context=myDict)
+    return render(request, 'admin/admin_dashboard.html', context=myDict)
 
 @login_required(login_url='userlogin')
 @user_passes_test(is_employee)
-def reception_dashboard_view(request):
+def employee_dashboard_view(request):
     employee = models.Employee.objects.get(user_id=request.user.id)
-    return render(request, 'reception_dashboard.html',
+    return render(request, 'employee/employee_dashboard.html',
                   context={'employee': employee})
 @login_required(login_url='userlogin')
 @user_passes_test(is_admin)
 def admin_employee_view(request):
-    return render(request, 'admin_employee.html')
+    return render(request, 'admin/admin_employee.html')
 
 @login_required(login_url='userlogin')
 @user_passes_test(is_admin)
 def admin_view_employee_view(request):
     employees = models.Employee.objects.all().filter(status=True)
-    return render(request, 'admin_view_employee.html', {'employees': employees})
+    return render(request, 'admin/admin_view_employee.html', {'employees': employees})
 @login_required(login_url='userlogin')
 @user_passes_test(is_admin)
 def admin_add_employee_view(request):
@@ -138,7 +138,7 @@ def admin_add_employee_view(request):
             messages.success(request, "Employee added successfully.")
             return HttpResponseRedirect('admin-view-employee')
         messages.error(request, "Error. Registration failed.")
-    return render(request, 'admin_add_employee.html', context=myDict)
+    return render(request, 'admin/admin_add_employee.html', context=myDict)
 
 @login_required(login_url='userlogin')
 @user_passes_test(is_admin)
@@ -162,7 +162,7 @@ def admin_update_employee_view(request, pk):
             messages.success(request, "Updating successful.")
             return redirect('admin-view-employee')
         messages.error(request, "Error. Updating failed.")
-    return render(request, 'admin_update_employee.html', context=myDict)
+    return render(request, 'admin/admin_update_employee.html', context=myDict)
 
 @login_required(login_url='userlogin')
 @user_passes_test(is_admin)
@@ -178,7 +178,7 @@ def admin_delete_employee_view(request, pk):
 @user_passes_test(is_admin)
 def admin_approve_employee_view(request):
     employees = models.Employee.objects.all().filter(status=False)
-    return render(request, 'admin_approve_employee.html', {'employees': employees})
+    return render(request, 'admin/admin_approve_employee.html', {'employees': employees})
 
 @login_required(login_url='userlogin')
 @user_passes_test(is_admin)
@@ -204,7 +204,7 @@ def admin_view(request):
     a = timezone.now()
     ist_time = a.astimezone(timezone.get_current_timezone())
     new_time = ist_time - timezone.timedelta(minutes=3)
-    return render(request, 'employeee_status.html', {'employees': employees,'a':new_time})
+    return render(request, 'employee/employeee_status.html', {'employees': employees,'a':new_time})
 
 @login_required(login_url='userlogin')
 @user_passes_test(is_admin)
@@ -213,7 +213,7 @@ def employee_status_offline_view(request):
     a = timezone.now()
     ist_time = a.astimezone(timezone.get_current_timezone())
     new_time = ist_time - timezone.timedelta(minutes=3)
-    return render(request, 'employee_status_offline.html', {'employees': employees,'a':new_time})
+    return render(request, 'employee/employee_status_offline.html', {'employees': employees,'a':new_time})
 
 @login_required(login_url='userlogin')
 @user_passes_test(is_admin)
@@ -222,10 +222,10 @@ def employee_status_online_view(request):
     a = timezone.now()
     ist_time = a.astimezone(timezone.get_current_timezone())
     new_time = ist_time - timezone.timedelta(minutes=3)
-    return render(request, 'employee_status_online.html', {'employees': employees,'a':new_time})
+    return render(request, 'employee/employee_status_online.html', {'employees': employees,'a':new_time})
 
 def employee_sort_view(request):
     employees = Employee.objects.all().order_by('user')
     for i in employees:
         print(i)
-    return render(request, 'admin_sort_view.html', {'employees': employees})
+    return render(request, 'admin/admin_sort_view.html', {'employees': employees})

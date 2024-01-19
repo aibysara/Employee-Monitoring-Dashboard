@@ -29,6 +29,7 @@ urlpatterns = [
     path('logout', LogoutView.as_view(template_name='userlogin.html'), name='logout'),
     path('afterlogin', views.afterlogin_view, name='afterlogin'),
     path('signup', views.signup_view, name='signup'),
+            # -------- For ADMIN ---------------
 
     path('adminsignup', views.admin_signup_view, name='adminsignup'),
     path('admin-dashboard', views.admin_dashboard_view, name='admin-dashboard'),
@@ -40,12 +41,13 @@ urlpatterns = [
     path('admin-add-employee', views.admin_add_employee_view, name='admin-add-employee'),
     path('admin-delete-employee/<int:pk>', views.admin_delete_employee_view, name='admin-delete-employee'),
     path('admin-update-employee/<int:pk>', views.admin_update_employee_view, name='admin-update-employee'),
-    path('employeesignup', views.employee_signup_view, name='employeesignup'),
     path('admin-view', views.admin_view, name='admin-view'),
     path('employee-status-offline', views.employee_status_offline_view, name='employee-status-offline'),
     path('employee-status-online', views.employee_status_online_view, name='employee-status-online'),
     path('employee-sort-view',views.employee_sort_view,name='employee-sort-view'),
-    path('reception-dashboard', views.reception_dashboard_view, name='reception-dashboard'),
+        # -------- For EMPLOYEE ---------------
+    path('employeesignup', views.employee_signup_view, name='employeesignup'),
+    path('employee-dashboard', views.employee_dashboard_view, name='employee-dashboard'),
 ]
 if (settings.DEBUG):
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
