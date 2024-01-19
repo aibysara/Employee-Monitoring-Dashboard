@@ -42,6 +42,8 @@ urlpatterns = [
     path('admin-update-employee/<int:pk>', views.admin_update_employee_view, name='admin-update-employee'),
     path('employeesignup', views.employee_signup_view, name='employeesignup'),
     path('admin-view', views.admin_view, name='admin-view'),
+    path('employee-status-offline', views.employee_status_offline_view, name='employee-status-offline'),
+    path('employee-status-online', views.employee_status_online_view, name='employee-status-online'),
     path('reception-dashboard', views.reception_dashboard_view, name='reception-dashboard'),
 ]
 if (settings.DEBUG):

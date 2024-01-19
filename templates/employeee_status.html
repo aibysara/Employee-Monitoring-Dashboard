@@ -41,7 +41,10 @@
   <div class="bor">
     <div class="tableFixHead">
       <h6 class="bg-info" style="padding:10px; text-align:center;">Employees Record
-      <a style="float:right; text-decoration: none; color:white" href="/admin-view-employee">Reset</a>
+
+         <a style="float:right; text-decoration: none; color:white" href="/employee-status-online">Online</a>
+
+        <a style="float:right; margin-right:50px; text-decoration: none; color:white" href="/employee-status-offline">Offline</a>
       </h6>
        <table class="table table-striped" id="myTable">
       <thead>
@@ -71,6 +74,17 @@
         <td>{{e.address}}</td>
         <td>{{e.mode}}</td>
         <td>{{e.last_activity}}</td>
+        <td>
+          {% if e.last_activity > a %}
+            <p style="color:Green">Online</p>
+          {% elif e.last_activity == None %}
+            <p style="color:red">Not Logged in</p>
+          {% elif e.last_activity < a %}
+            <p style="color:Orange">Offline</p>
+
+          {% endif %}
+        </td>
+
 
       </tr>
       {% endfor %}

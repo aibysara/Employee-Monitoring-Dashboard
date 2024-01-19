@@ -201,4 +201,25 @@ def reject_employee_view(request, pk):
 @user_passes_test(is_admin)
 def admin_view(request):
     employees = models.Employee.objects.all().filter(status=True)
-    return render(request, 'employeee_status.html', {'employees': employees})
+    a = timezone.now()
+    ist_time = a.astimezone(timezone.get_current_timezone())
+    new_time = ist_time - timezone.timedelta(minutes=3)
+    return render(request, 'employeee_status.html', {'employees': employees,'a':new_time})
+
+@login_required(login_url='userlogin')
+@user_passes_test(is_admin)
+def employee_status_offline_view(request):
+    employees = models.Employee.objects.all().filter(status=True)
+    a = timezone.now()
+    ist_time = a.astimezone(timezone.get_current_timezone())
+    new_time = ist_time - timezone.timedelta(minutes=3)
+    return render(request, 'employee_status_offline.html', {'employees': employees,'a':new_time})
+
+@login_required(login_url='userlogin')
+@user_passes_test(is_admin)
+def employee_status_online_view(request):
+    employees = models.Employee.objects.all().filter(status=True)
+    a = timezone.now()
+    ist_time = a.astimezone(timezone.get_current_timezone())
+    new_time = ist_time - timezone.timedelta(minutes=3)
+    return render(request, 'employee_status_online.html', {'employees': employees,'a':new_time})
