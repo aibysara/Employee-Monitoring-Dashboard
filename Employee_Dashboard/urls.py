@@ -44,6 +44,7 @@ urlpatterns = [
     path('admin-view', views.admin_view, name='admin-view'),
     path('employee-status-offline', views.employee_status_offline_view, name='employee-status-offline'),
     path('employee-status-online', views.employee_status_online_view, name='employee-status-online'),
+    path('employee-sort-view',views.employee_sort_view,name='employee-sort-view'),
     path('reception-dashboard', views.reception_dashboard_view, name='reception-dashboard'),
 ]
 if (settings.DEBUG):

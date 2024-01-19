@@ -70,8 +70,8 @@ def afterlogin_view(request):
 
     elif is_employee(request.user):
         accountapproval = models.Employee.objects.all().filter(user_id=request.user.id, status=True)
-        x=Employee.objects.get(user_id=request.user.id,status=True)
         if accountapproval:
+            x = Employee.objects.get(user_id=request.user.id, status=True)
             a=timezone.now()
             ist_time = a.astimezone(timezone.get_current_timezone())
             print(ist_time)
@@ -223,3 +223,9 @@ def employee_status_online_view(request):
     ist_time = a.astimezone(timezone.get_current_timezone())
     new_time = ist_time - timezone.timedelta(minutes=3)
     return render(request, 'employee_status_online.html', {'employees': employees,'a':new_time})
+
+def employee_sort_view(request):
+    employees = Employee.objects.all().order_by('user')
+    for i in employees:
+        print(i)
+    return render(request, 'admin_sort_view.html', {'employees': employees})
