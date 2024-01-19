@@ -1,11 +1,83 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Admin Employee Status</title>
-</head>
-<body>
-    <h1>Employee Status for {{ employee_status.user.username }}</h1>
-    <p>Last Activity: {{ employee_status.last_activity }}</p>
-    <p>Status: {% if employee_status.is_online %} Online {% else %} Offline {% endif %}</p>
-</body>
-</html>
+{% extends 'admin_base.html' %}
+{% block content %}
+{%load static%}
+
+  <style media="screen">
+   a:link {
+      text-decoration: none;
+    }
+
+    h6 {
+      text-align: center;
+    }
+
+    .row {
+      margin: 100px;
+    }
+
+    .menu {
+      top: 50px;
+    }
+    h6 {
+      color: white;
+    }
+    .bor{
+    padding:1%; margin-left:2%; border:1px solid transparent;border-radius:4px; border-color:#337ab7;
+    }
+    .tableFixHead          { overflow-y: auto; height: 470px; }
+    .tableFixHead thead th { position: sticky; top: 0; }
+    .tableFixHead h6 { position: sticky; }
+    th{
+      background-color: white;
+    }
+
+  </style>
+
+  <script src="{% static 'js/sort.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/sort.css' %}">
+<br><br><br>
+{% include 'messages.html' %}
+<div class="container">
+  <div class="bor">
+    <div class="tableFixHead">
+      <h6 class="bg-info" style="padding:10px; text-align:center;">Employees Record
+      <a style="float:right; text-decoration: none; color:white" href="/admin-view-employee">Reset</a>
+      </h6>
+       <table class="table table-striped" id="myTable">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)" class="headerSortDown">Name</th>
+          <th>Profile Picture</th>
+          <th onclick="sortTable(0)" class="headerSortDown">Mobile</th>
+          <th onclick="sortTable(0)" class="headerSortDown">Email</th>
+          <th onclick="sortTable(0)" class="headerSortDown">Address</th>
+          <th onclick="sortTable(0)" class="headerSortDown">Mode of Working</th>
+          <th>Last Activity</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      {% for e in employees %}
+      <tr>
+        <td> {{e.get_name}}</td>
+        <td> <center>
+          {% if e.profile_pic %}
+          <img src="{{ e.profile_pic.url }}" alt="Profile Pic missing" height="40px" width="40px" />
+          {% else %}
+          No Profile Pic
+          {% endif %}
+        </center></td>
+        <td>{{e.mobile}}</td>
+        <td>{{e.email}}</td>
+        <td>{{e.address}}</td>
+        <td>{{e.mode}}</td>
+        <td>{{e.last_activity}}</td>
+
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+
+  </div>
+
+{% endblock content %}

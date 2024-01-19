@@ -6,6 +6,7 @@ from employee import forms
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import Group
 from employee import models
+from django.utils import timezone
 from employee.models import Employee
 
 # Create your views here.
@@ -65,13 +66,19 @@ def is_employee(user):
 
 def afterlogin_view(request):
     if is_admin(request.user):
-        print("yes")
         return redirect('admin-dashboard')
 
     elif is_employee(request.user):
-        print("no")
         accountapproval = models.Employee.objects.all().filter(user_id=request.user.id, status=True)
+        x=Employee.objects.get(user_id=request.user.id,status=True)
         if accountapproval:
+            a=timezone.now()
+            ist_time = a.astimezone(timezone.get_current_timezone())
+            print(ist_time)
+            x.last_activity=ist_time
+            x.save()
+
+            #accountapproval.last_activity.save()
             return redirect('reception-dashboard')
         else:
             return render(request, 'employee_wait_for_approval.html')
@@ -190,3 +197,8 @@ def reject_employee_view(request, pk):
     employee.delete()
     return redirect('admin-approve-employee')
 # Create your views here.
+@login_required(login_url='userlogin')
+@user_passes_test(is_admin)
+def admin_view(request):
+    employees = models.Employee.objects.all().filter(status=True)
+    return render(request, 'employeee_status.html', {'employees': employees})
